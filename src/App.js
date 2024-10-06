@@ -165,7 +165,15 @@ function App() {
         </div>
 
         {selectedTile && (
-          <div className="overlay" onClick={handleClose}>
+          <div className="overlay" onClick={handleClose}
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
+            // style={{
+            //   transition: transitioning ? 'transform 0.3s ease' : 'none',
+            //   transform: `translateX(${currentX - startX}px)`,
+            // }}
+            >
             <div className="enlarged-tile" onClick={(e) => e.stopPropagation()}>
               <div className="tile-image-container"
               // onTouchStart={handleTouchStart}
@@ -175,13 +183,6 @@ function App() {
                   src={selectedTile.images[imageIndexes[selectedTileIndex]]}
                   alt={selectedTile.name}
                   className="enlarged-image"
-                  onTouchStart={handleTouchStart}
-                  onTouchMove={handleTouchMove}
-                  onTouchEnd={handleTouchEnd}
-                  style={{
-                    transition: transitioning ? 'transform 0.3s ease' : 'none',
-                    transform: `translateX(${currentX - startX}px)`,
-                  }}
                 // style={{ transform: `translateX(${swipePosition}px)`, transition: 'transform 0.3s ease-in-out' }} // Smooth transition
 
                 />
