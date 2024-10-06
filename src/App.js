@@ -26,6 +26,7 @@ function App() {
 
   const [selectedTile, setSelectedTile] = useState(null);
   const [selectedTileIndex, setSelectedTileIndex] = useState(0);
+  const [swipePosition, setSwipePosition] = useState(0); // To track swipe position
 
 
   const [imageIndexes, setImageIndexes] = useState(
@@ -34,6 +35,8 @@ function App() {
   const handleTileClick = (tileIndex) => {
     setSelectedTile(tilesData[tileIndex]);
     setSelectedTileIndex(tileIndex); // Set the tile index for the enlarged view
+    setSwipePosition(0); // Reset swipe position
+
   };
 
   const handleClose = () => {
@@ -62,13 +65,17 @@ function App() {
 
   const handleTouchStart = (e) => {
     startX = e.touches[0].clientX; // Record the initial touch position
+    setSwipePosition(0); // Reset swipe position
+
   };
 
   const handleTouchMove = (e) => {
     const currentX = e.touches[0].clientX; // Current touch position
     const diffX = startX - currentX; // Calculate the difference
 
-    if (Math.abs(diffX) > 30) { // Only consider swipes with sufficient movement
+    setSwipePosition(diffX);
+
+    if (Math.abs(diffX) > 50) { // Only consider swipes with sufficient movement
       if (diffX > 0) {
         // Swipe Left
         handleNextImage(selectedTileIndex);
@@ -77,6 +84,8 @@ function App() {
         handlePrevImage(selectedTileIndex);
       }
       startX = currentX; // Reset start position to current position
+      setSwipePosition(0); // Reset swipe position after change
+
     }
   };
 
@@ -135,6 +144,8 @@ function App() {
                   src={selectedTile.images[imageIndexes[selectedTileIndex]]}
                   alt={selectedTile.name}
                   className="enlarged-image"
+                  style={{ transform: `translateX(${swipePosition}px)`, transition: 'transform 0.3s ease-in-out' }} // Smooth transition
+
                 />
                 {/* Buttons for sliding between images in enlarged view */}
                 <button className="prev-btn" onClick={() => handlePrevImage(selectedTileIndex)}>
