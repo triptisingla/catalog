@@ -36,7 +36,7 @@ function App() {
   // Variables to track touch events
   const [startX, setStartX] = useState(0);
   const [currentX, setCurrentX] = useState(0);
-  const [transitioning, setTransitioning] = useState(false);
+  // const [transitioning, setTransitioning] = useState(false);
 
 
 
@@ -49,7 +49,7 @@ function App() {
 
   const handleClose = () => {
     setSelectedTile(null);
-    setTransitioning(false);
+    // setTransitioning(false);
 
   };
 
@@ -76,7 +76,7 @@ function App() {
   const handleTouchStart = (e) => {
     setStartX(e.touches[0].clientX); // Record the initial touch position
     // setSwipePosition(0); // Reset swipe position
-    setTransitioning(false);
+    // setTransitioning(false);
 
 
   };
@@ -117,7 +117,7 @@ function App() {
       }
     }
 
-    setTransitioning(true);
+    // setTransitioning(true);
   };
 
 
