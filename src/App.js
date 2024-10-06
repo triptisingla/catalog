@@ -168,22 +168,21 @@ function App() {
           <div className="overlay" onClick={handleClose}>
             <div className="enlarged-tile" onClick={(e) => e.stopPropagation()}>
               <div className="tile-image-container"
-                // onTouchStart={handleTouchStart}
-                // onTouchMove={handleTouchMove}
-
-                onTouchStart={handleTouchStart}
-                onTouchMove={handleTouchMove}
-                onTouchEnd={handleTouchEnd}
-                style={{
-                  transition: transitioning ? 'transform 0.3s ease' : 'none',
-                  transform: `translateX(${currentX - startX}px)`,
-                }}
+              // onTouchStart={handleTouchStart}
+              // onTouchMove={handleTouchMove}
               >
                 <img
                   src={selectedTile.images[imageIndexes[selectedTileIndex]]}
                   alt={selectedTile.name}
                   className="enlarged-image"
-                  // style={{ transform: `translateX(${swipePosition}px)`, transition: 'transform 0.3s ease-in-out' }} // Smooth transition
+                  onTouchStart={handleTouchStart}
+                  onTouchMove={handleTouchMove}
+                  onTouchEnd={handleTouchEnd}
+                  style={{
+                    transition: transitioning ? 'transform 0.3s ease' : 'none',
+                    transform: `translateX(${currentX - startX}px)`,
+                  }}
+                // style={{ transform: `translateX(${swipePosition}px)`, transition: 'transform 0.3s ease-in-out' }} // Smooth transition
 
                 />
                 {/* Buttons for sliding between images in enlarged view */}
