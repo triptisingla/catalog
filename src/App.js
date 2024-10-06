@@ -99,28 +99,28 @@ function App() {
                   alt={tile.name}
                   className="tile-image"
                 />
-                <h2>{tile.name}</h2>
-                <p>{tile.size}</p>
-                {/* Buttons for sliding between images on the card */}
-                <button
-                  className="prev-btn"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handlePrevImage(tileIndex);
-                  }}
-                >
-                  Prev
-                </button>
-                <button
-                  className="next-btn"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleNextImage(tileIndex);
-                  }}
-                >
-                  Next
-                </button>
               </div>
+              <h2>{tile.name}</h2>
+              <p>{tile.size}</p>
+              {/* Buttons for sliding between images on the card */}
+              <button
+                className="prev-btn"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handlePrevImage(tileIndex);
+                }}
+              >
+                Prev
+              </button>
+              <button
+                className="next-btn"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleNextImage(tileIndex);
+                }}
+              >
+                Next
+              </button>
             </div>
           ))}
         </div>
