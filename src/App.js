@@ -26,21 +26,31 @@ function App() {
 
   const [selectedTile, setSelectedTile] = useState(null);
   const [selectedTileIndex, setSelectedTileIndex] = useState(0);
-  const [swipePosition, setSwipePosition] = useState(0); // To track swipe position
+  // const [swipePosition, setSwipePosition] = useState(0); // To track swipe position
 
 
   const [imageIndexes, setImageIndexes] = useState(
     tilesData.map(() => 0) // Keep track of the current image index for each tile card
   );
+
+  // Variables to track touch events
+  const [startX, setStartX] = useState(0);
+  const [currentX, setCurrentX] = useState(0);
+  const [transitioning, setTransitioning] = useState(false);
+
+
+
   const handleTileClick = (tileIndex) => {
     setSelectedTile(tilesData[tileIndex]);
     setSelectedTileIndex(tileIndex); // Set the tile index for the enlarged view
-    setSwipePosition(0); // Reset swipe position
+    // setSwipePosition(0); // Reset swipe position
 
   };
 
   const handleClose = () => {
     setSelectedTile(null);
+    setTransitioning(false);
+
   };
 
   const handleNextImage = (tileIndex) => {
@@ -61,34 +71,54 @@ function App() {
 
 
   // Touch event handlers
-  let startX = 0;
+  // let startX = 0;
 
   const handleTouchStart = (e) => {
-    startX = e.touches[0].clientX; // Record the initial touch position
-    setSwipePosition(0); // Reset swipe position
+    setStartX(e.touches[0].clientX); // Record the initial touch position
+    // setSwipePosition(0); // Reset swipe position
+    setTransitioning(false);
+
 
   };
+
+  // const handleTouchMove = (e) => {
+  //   const currentX = e.touches[0].clientX; // Current touch position
+  //   const diffX = startX - currentX; // Calculate the difference
+
+  //   setSwipePosition(diffX);
+
+  //   if (Math.abs(diffX) > 50) { // Only consider swipes with sufficient movement
+  //     if (diffX > 0) {
+  //       // Swipe Left
+  //       handleNextImage(selectedTileIndex);
+  //     } else {
+  //       // Swipe Right
+  //       handlePrevImage(selectedTileIndex);
+  //     }
+  //     startX = currentX; // Reset start position to current position
+  //     setSwipePosition(0); // Reset swipe position after change
+
+  //   }
+  // };
 
   const handleTouchMove = (e) => {
-    const currentX = e.touches[0].clientX; // Current touch position
-    const diffX = startX - currentX; // Calculate the difference
-
-    setSwipePosition(diffX);
-
-    if (Math.abs(diffX) > 50) { // Only consider swipes with sufficient movement
-      if (diffX > 0) {
-        // Swipe Left
-        handleNextImage(selectedTileIndex);
-      } else {
-        // Swipe Right
-        handlePrevImage(selectedTileIndex);
-      }
-      startX = currentX; // Reset start position to current position
-      setSwipePosition(0); // Reset swipe position after change
-
-    }
+    setCurrentX(e.touches[0].clientX);
   };
 
+  const handleTouchEnd = () => {
+    const diffX = startX - currentX;
+
+    // If swiped left, go to next image
+    if (Math.abs(diffX) > 30) {
+      if (diffX > 0) {
+        handleNextImage(selectedTileIndex);
+      } else {
+        handlePrevImage(selectedTileIndex);
+      }
+    }
+
+    setTransitioning(true);
+  };
 
 
   return (
@@ -138,13 +168,22 @@ function App() {
           <div className="overlay" onClick={handleClose}>
             <div className="enlarged-tile" onClick={(e) => e.stopPropagation()}>
               <div className="tile-image-container"
+                // onTouchStart={handleTouchStart}
+                // onTouchMove={handleTouchMove}
+
                 onTouchStart={handleTouchStart}
-                onTouchMove={handleTouchMove}>
+                onTouchMove={handleTouchMove}
+                onTouchEnd={handleTouchEnd}
+                style={{
+                  transition: transitioning ? 'transform 0.3s ease' : 'none',
+                  transform: `translateX(${currentX - startX}px)`,
+                }}
+              >
                 <img
                   src={selectedTile.images[imageIndexes[selectedTileIndex]]}
                   alt={selectedTile.name}
                   className="enlarged-image"
-                  style={{ transform: `translateX(${swipePosition}px)`, transition: 'transform 0.3s ease-in-out' }} // Smooth transition
+                  // style={{ transform: `translateX(${swipePosition}px)`, transition: 'transform 0.3s ease-in-out' }} // Smooth transition
 
                 />
                 {/* Buttons for sliding between images in enlarged view */}
