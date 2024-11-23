@@ -34,8 +34,8 @@ function App() {
   );
 
   // Variables to track touch events
-  const [startX, setStartX] = useState(0);
-  const [currentX, setCurrentX] = useState(0);
+  // const [startX, setStartX] = useState(0);
+  // const [currentX, setCurrentX] = useState(0);
   // const [transitioning, setTransitioning] = useState(false);
 
 
@@ -73,13 +73,13 @@ function App() {
   // Touch event handlers
   // let startX = 0;
 
-  const handleTouchStart = (e) => {
-    setStartX(e.touches[0].clientX); // Record the initial touch position
-    // setSwipePosition(0); // Reset swipe position
-    // setTransitioning(false);
+  // const handleTouchStart = (e) => {
+  //   setStartX(e.touches[0].clientX); // Record the initial touch position
+  //   // setSwipePosition(0); // Reset swipe position
+  //   // setTransitioning(false);
 
 
-  };
+  // };
 
   // const handleTouchMove = (e) => {
   //   const currentX = e.touches[0].clientX; // Current touch position
@@ -101,24 +101,24 @@ function App() {
   //   }
   // };
 
-  const handleTouchMove = (e) => {
-    setCurrentX(e.touches[0].clientX);
-  };
+  // const handleTouchMove = (e) => {
+  //   setCurrentX(e.touches[0].clientX);
+  // };
 
-  const handleTouchEnd = () => {
-    const diffX = startX - currentX;
+  // const handleTouchEnd = () => {
+  //   const diffX = startX - currentX;
 
-    // If swiped left, go to next image
-    if (Math.abs(diffX) > 30) {
-      if (diffX > 0) {
-        handleNextImage(selectedTileIndex);
-      } else {
-        handlePrevImage(selectedTileIndex);
-      }
-    }
+  //   // If swiped left, go to next image
+  //   if (Math.abs(diffX) > 30) {
+  //     if (diffX > 0) {
+  //       handleNextImage(selectedTileIndex);
+  //     } else {
+  //       handlePrevImage(selectedTileIndex);
+  //     }
+  //   }
 
-    // setTransitioning(true);
-  };
+  //   // setTransitioning(true);
+  // };
 
 
   return (
@@ -166,9 +166,6 @@ function App() {
 
         {selectedTile && (
           <div className="overlay" onClick={handleClose}
-            onTouchStart={handleTouchStart}
-            onTouchMove={handleTouchMove}
-            onTouchEnd={handleTouchEnd}
             // style={{
             //   transition: transitioning ? 'transform 0.3s ease' : 'none',
             //   transform: `translateX(${currentX - startX}px)`,
